@@ -1,0 +1,157 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>FRUITY — Aroma Pochi</title>
+<style>
+:root{
+  --cat:#ff7926;
+  --accent:#c7a97a;
+}
+body{
+  background:linear-gradient(to bottom,#fff8f1,#fceedd);
+  font-family:'Helvetica Neue','Meiryo',sans-serif;
+  color:#3a2e2e;
+  margin:0;
+  padding:max(10px,3vw);
+}
+h1{
+  font-size:clamp(18px,5vw,22px);
+  text-align:center;
+  margin:8px 0 4px;
+}
+p.sub{
+  text-align:center;
+  font-size:clamp(10px,3vw,13px);
+  margin-bottom:16px;
+  color:#777;
+}
+.toolbar{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin:10px 0 16px;
+}
+.seg{
+  display:inline-flex;
+  border:1px solid #ccc;
+  border-radius:12px;
+  overflow:hidden;
+}
+.seg button{
+  border:0;
+  background:#f3f3f3;
+  padding:6px 10px;
+  font-size:13px;
+  cursor:pointer;
+}
+.seg button.on{
+  background:#111;
+  color:#fff;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(120px,1fr));
+  gap:10px;
+  padding-bottom:80px;
+}
+.btn{
+  background:var(--cat);
+  color:#fff;
+  border:none;
+  border-radius:16px;
+  min-height:68px;
+  font-size:15px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.btn:active{
+  transform:scale(0.96);
+  box-shadow:0 0 8px rgba(0,0,0,.3) inset;
+}
+.en{font-weight:700;font-size:14px;}
+.jp{font-size:12px;opacity:.9;margin-top:2px;}
+.bottom-nav{
+  position:fixed;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--accent);
+  color:#fff;
+  padding:10px 22px;
+  border-radius:28px;
+  font-size:14px;
+  text-decoration:none;
+  box-shadow:0 3px 10px rgba(0,0,0,.25);
+  transition:opacity .2s;
+}
+.bottom-nav:active{opacity:.8;}
+@media (prefers-color-scheme: dark){
+  body{
+    background:radial-gradient(1000px at 50% 10%,#1b1917,#0f0e0d);
+    color:#f5efe6;
+  }
+  .btn{color:#fff;}
+}
+</style>
+</head>
+
+<body>
+<h1>FRUITY（フルーティー）</h1>
+<p class="sub">果実の香り — Fruity Aroma Notes</p>
+
+<div class="toolbar">
+  <div class="seg">
+    <button id="labEN" class="on" onclick="setLabel('EN')">EN</button>
+    <button id="labJP" onclick="setLabel('JP')">日本語</button>
+    <button id="labBI" onclick="setLabel('BI')">EN＋JP</button>
+  </div>
+</div>
+
+<div class="grid">
+  <button class="btn" onclick="addStamp('fruity','Lemon');window.location.replace('stamp.html');"><span class="en">Lemon</span><span class="jp">レモン</span></button>
+  <button class="btn" onclick="addStamp('fruity','Orange');window.location.replace('stamp.html');"><span class="en">Orange</span><span class="jp">オレンジ</span></button>
+  <button class="btn" onclick="addStamp('fruity','Apple');window.location.replace('stamp.html');"><span class="en">Apple</span><span class="jp">青リンゴ</span></button>
+  <button class="btn" onclick="addStamp('fruity','Pear');window.location.replace('stamp.html');"><span class="en">Pear</span><span class="jp">洋梨</span></button>
+  <button class="btn" onclick="addStamp('fruity','Peach');window.location.replace('stamp.html');"><span class="en">Peach</span><span class="jp">もも</span></button>
+  <button class="btn" onclick="addStamp('fruity','Apricot');window.location.replace('stamp.html');"><span class="en">Apricot</span><span class="jp">アプリコット</span></button>
+  <button class="btn" onclick="addStamp('fruity','Plum');window.location.replace('stamp.html');"><span class="en">Plum</span><span class="jp">プラム</span></button>
+  <button class="btn" onclick="addStamp('fruity','Cherry');window.location.replace('stamp.html');"><span class="en">Cherry</span><span class="jp">チェリー</span></button>
+  <button class="btn" onclick="addStamp('fruity','Grape');window.location.replace('stamp.html');"><span class="en">Grape</span><span class="jp">ぶどう</span></button>
+  <button class="btn" onclick="addStamp('fruity','Banana');window.location.replace('stamp.html');"><span class="en">Banana</span><span class="jp">バナナ</span></button>
+  <button class="btn" onclick="addStamp('fruity','Pineapple');window.location.replace('stamp.html');"><span class="en">Pineapple</span><span class="jp">パイン</span></button>
+  <button class="btn" onclick="addStamp('fruity','Mango');window.location.replace('stamp.html');"><span class="en">Mango</span><span class="jp">マンゴー</span></button>
+  <button class="btn" onclick="addStamp('fruity','Passionfruit');window.location.replace('stamp.html');"><span class="en">Passionfruit</span><span class="jp">パッションフルーツ</span></button>
+  <button class="btn" onclick="addStamp('fruity','Dried Fruit');window.location.replace('stamp.html');"><span class="en">Dried Fruit</span><span class="jp">ドライフルーツ</span></button>
+  <button class="btn" onclick="addStamp('fruity','Citrus Peel');window.location.replace('stamp.html');"><span class="en">Citrus Peel</span><span class="jp">柑橘ピール</span></button>
+</div>
+
+<a href="index.html" class="bottom-nav">← Aroma Pochi に戻る</a>
+
+<script>
+let mode='BI';
+function setLabel(m){
+  mode=m;
+  document.getElementById('labEN').classList.toggle('on',m==='EN');
+  document.getElementById('labJP').classList.toggle('on',m==='JP');
+  document.getElementById('labBI').classList.toggle('on',m==='BI');
+  document.querySelectorAll('.en').forEach(e=>e.style.display=(m==='JP')?'none':'');
+  document.querySelectorAll('.jp').forEach(e=>e.style.display=(m==='EN')?'none':'');
+}
+
+function addStamp(category, name){
+  let data = JSON.parse(localStorage.getItem("aromaStamps") || "{}");
+  if(!data[category]) data[category] = [];
+  if(!data[category].includes(name)) data[category].push(name);
+  localStorage.setItem("aromaStamps", JSON.stringify(data));
+}
+
+/* 初期表示をBIモードに */
+window.addEventListener('load', ()=> setLabel('BI'));
+</script>
+</body>
+</html>

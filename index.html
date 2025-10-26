@@ -1,0 +1,151 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Aroma Pochi — Amber Palette</title>
+<style>
+:root{
+  --bg1:#f8f1e3;
+  --bg2:#f2e3c4;
+  --ink:#3a2e2e;
+  --accent:#c7a97a;
+}
+body{
+  margin:0;
+  font-family:'Helvetica Neue','Noto Sans JP',sans-serif;
+  background:linear-gradient(to bottom,var(--bg1),var(--bg2));
+  color:var(--ink);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  min-height:100vh;
+  padding:clamp(12px,4vw,20px);
+}
+h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(22px,6vw,28px);
+  margin:12px 0 6px;
+  letter-spacing:1px;
+}
+p.sub{
+  margin:0 0 20px;
+  color:#7a6b5a;
+  font-size:clamp(12px,3vw,14px);
+  text-align:center;
+}
+
+/* グリッドレイアウト */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:clamp(10px,3vw,14px);
+  width:100%;
+  max-width:480px;
+}
+.btn{
+  border:none;
+  border-radius:18px;
+  padding:clamp(14px,4vw,18px);
+  font-size:clamp(15px,4vw,17px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+  text-decoration:none;
+  font-weight:600;
+  box-shadow:0 3px 8px rgba(0,0,0,0.15);
+  position:relative;
+  overflow:hidden;
+  transition:transform .15s ease;
+}
+.btn span.icon{
+  font-size:clamp(22px,6vw,28px);
+  margin-bottom:4px;
+}
+.btn:active{
+  transform:scale(0.96);
+}
+
+/* グロー効果 */
+.btn::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:10px;
+  height:10px;
+  background:rgba(255,255,255,0.6);
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  opacity:0;
+  pointer-events:none;
+}
+.btn.glow::after{
+  animation:glow .7s ease-out forwards;
+}
+@keyframes glow{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:.7;}
+  40%{transform:translate(-50%,-50%) scale(3);opacity:.4;}
+  100%{transform:translate(-50%,-50%) scale(6);opacity:0;}
+}
+
+/* カテゴリごとの色 */
+.fruity{background:#ff7926;}
+.floral{background:#ff8bb2;}
+.sweet{background:#f6b84b;}
+.winey{background:#b46dd6;}
+.woody{background:#b97a56;}
+.smokey{background:#6b4b32;}
+.sulfury{background:#caa974;}
+.cereal{background:#e8c94c;}
+
+footer{
+  margin-top:auto;
+  font-size:clamp(10px,2.8vw,12px);
+  color:#8c7b66;
+  text-align:center;
+  padding-top:20px;
+}
+
+/* ダークモード */
+@media (prefers-color-scheme: dark){
+  body{
+    background:radial-gradient(1000px at 50% 10%,#1b1917,#0f0e0d);
+    color:#f5efe6;
+  }
+  .btn{color:#fff;}
+  footer{color:#b3a48d;}
+}
+</style>
+</head>
+
+<body>
+  <h1>Aroma Pochi</h1>
+  <p class="sub">Select the aroma category — 香りのタイプを選んでください</p>
+
+  <div class="grid">
+    <a href="fruity.html" class="btn fruity"><span class="icon">🍊</span>Fruity</a>
+    <a href="floral.html" class="btn floral"><span class="icon">🌸</span>Floral</a>
+    <a href="sweet.html" class="btn sweet"><span class="icon">🍯</span>Sweet</a>
+    <a href="winey.html" class="btn winey"><span class="icon">🍷</span>Winey</a>
+    <a href="woody.html" class="btn woody"><span class="icon">🌲</span>Woody</a>
+    <a href="smokey.html" class="btn smokey"><span class="icon">🔥</span>Smokey</a>
+    <a href="sulfury.html" class="btn sulfury"><span class="icon">🌋</span>Sulfury</a>
+    <a href="cereal.html" class="btn cereal"><span class="icon">🌾</span>Cereal</a>
+  </div>
+
+  <footer>© Amber Palette / Bar SPEC</footer>
+
+<script>
+document.querySelectorAll('.btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    btn.classList.remove('glow');
+    void btn.offsetWidth; // trigger reflow for restart animation
+    btn.classList.add('glow');
+  });
+});
+</script>
+</body>
+</html>

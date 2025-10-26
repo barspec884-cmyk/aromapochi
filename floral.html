@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>FLORAL — Aroma Pochi</title>
+<link rel="stylesheet" href="common.css">
+<style>
+:root{
+  --cat:#ff8bb2;
+  --accent:#c7a97a;
+}
+body{
+  background:linear-gradient(to bottom,#fff7fb,#fbe9f0);
+  font-family:'Helvetica Neue','Meiryo',sans-serif;
+  color:#3a2e2e;
+  margin:0;
+  padding:max(10px,3vw);
+}
+h1{font-size:clamp(18px,5vw,22px);text-align:center;margin:8px 0 4px;}
+p.sub{text-align:center;font-size:clamp(10px,3vw,13px);margin-bottom:16px;color:#777;}
+.toolbar{display:flex;justify-content:center;gap:10px;margin:10px 0 16px;}
+.seg{display:inline-flex;border:1px solid #ccc;border-radius:12px;overflow:hidden;}
+.seg button{border:0;background:#f3f3f3;padding:6px 10px;font-size:13px;cursor:pointer;}
+.seg button.on{background:#111;color:#fff;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;padding-bottom:80px;}
+.btn{background:var(--cat);color:#fff;border:none;border-radius:16px;min-height:68px;font-size:15px;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
+transition:transform .15s ease,box-shadow .15s ease;}
+.btn:active{transform:scale(0.96);box-shadow:0 0 8px rgba(0,0,0,.3) inset;}
+.en{font-weight:700;font-size:14px;}
+.jp{font-size:12px;opacity:.9;margin-top:2px;}
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+background:var(--accent);color:#fff;padding:10px 22px;border-radius:28px;font-size:14px;
+text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.25);transition:opacity .2s;}
+.bottom-nav:active{opacity:.8;}
+@media (prefers-color-scheme: dark){
+  body{background:radial-gradient(1000px at 50% 10%,#1b1917,#0f0e0d);color:#f5efe6;}
+  .btn{color:#fff;}
+}
+</style>
+</head>
+
+<body>
+<h1>FLORAL（フローラル）</h1>
+<p class="sub">花や植物の華やかな香り — Floral Aroma Notes</p>
+
+<div class="toolbar">
+  <div class="seg">
+    <button id="labEN" class="on" onclick="setLabel('EN')">EN</button>
+    <button id="labJP" onclick="setLabel('JP')">日本語</button>
+    <button id="labBI" onclick="setLabel('BI')">EN＋JP</button>
+  </div>
+</div>
+
+<div class="grid">
+  <button class="btn"><span class="en">Lavender</span><span class="jp">ラベンダー</span></button>
+  <button class="btn"><span class="en">Rose</span><span class="jp">ローズ</span></button>
+  <button class="btn"><span class="en">Violet</span><span class="jp">スミレ</span></button>
+  <button class="btn"><span class="en">Jasmine</span><span class="jp">ジャスミン</span></button>
+  <button class="btn"><span class="en">Orange Blossom</span><span class="jp">オレンジの花</span></button>
+  <button class="btn"><span class="en">Chamomile</span><span class="jp">カモミール</span></button>
+  <button class="btn"><span class="en">Lilac</span><span class="jp">ライラック</span></button>
+  <button class="btn"><span class="en">Geranium</span><span class="jp">ゼラニウム</span></button>
+  <button class="btn"><span class="en">Peony</span><span class="jp">ボタン</span></button>
+  <button class="btn"><span class="en">Mimosa</span><span class="jp">ミモザ</span></button>
+  <button class="btn"><span class="en">Lily</span><span class="jp">ユリ</span></button>
+  <button class="btn"><span class="en">Magnolia</span><span class="jp">モクレン</span></button>
+  <button class="btn"><span class="en">Osmanthus</span><span class="jp">キンモクセイ</span></button>
+  <button class="btn"><span class="en">Honeysuckle</span><span class="jp">ハニーサックル</span></button>
+  <button class="btn"><span class="en">Input</span><span class="jp">インプット</span></button>
+</div>
+
+<a href="index.html" class="bottom-nav">← Aroma Pochi に戻る</a>
+
+<script>
+let mode='BI';
+function setLabel(m){
+  mode=m;
+  document.getElementById('labEN').classList.toggle('on',m==='EN');
+  document.getElementById('labJP').classList.toggle('on',m==='JP');
+  document.getElementById('labBI').classList.toggle('on',m==='BI');
+  document.querySelectorAll('.en').forEach(e=>e.style.display=(m==='JP')?'none':'');
+  document.querySelectorAll('.jp').forEach(e=>e.style.display=(m==='EN')?'none':'');
+}
+</script>
+</body>
+</html>

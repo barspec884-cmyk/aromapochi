@@ -1,0 +1,23 @@
+﻿.btn::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:12px;
+  height:12px;
+  background:currentColor;
+  border-radius:50%;
+  transform:translate(-50%,-50%) scale(0);
+  opacity:0;
+  pointer-events:none;
+  filter:blur(6px);
+  mix-blend-mode:screen;
+}
+.btn.glow::after{
+  animation:glow .9s ease-out forwards;
+}
+@keyframes glow{
+  0%{transform:translate(-50%,-50%) scale(0);opacity:.9;}
+  40%{transform:translate(-50%,-50%) scale(3.5);opacity:.7;}
+  100%{transform:translate(-50%,-50%) scale(8);opacity:0;}
+}
