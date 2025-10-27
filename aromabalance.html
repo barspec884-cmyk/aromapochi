@@ -1,0 +1,220 @@
+
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AROMA BALANCE — Amber Palette Merge</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root{
+    --bg:#efe3d4; --panel:#f6efe6; --ink:#2b1a09;
+    --accent:#c38154; --bar:#cfa887;
+    --tile-fruity:#f5a3c7; --tile-floral:#f3c0e6; --tile-cereal:#f6d05b; --tile-sulfur:#f1c865;
+    --tile-sweet:#ffd87a; --tile-smokey:#d2a018; --tile-woody:#c76a20; --tile-winey:#6d2a87;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{margin:0;background:#22140c;color:var(--ink);font-family:"Noto Sans JP",system-ui}
+  .outer{min-height:100vh;background:#22140c;display:flex;justify-content:center;align-items:flex-start}
+  .phone{width:min(430px,100%);background:var(--bg);overflow:hidden;}
+
+  header{
+    position:sticky;top:0;
+    background:var(--panel);
+    padding:12px 16px 6px;
+    border-bottom:1px solid #decbb7
+  }
+  .row{display:flex;align-items:center;gap:8px}
+  .back{font-size:22px;line-height:1;cursor:pointer}
+  h1{font-family:serif;font-weight:700;letter-spacing:.06em;margin:0;font-size:24px}
+  .progress{height:6px;background:#e7d6c6;border-radius:6px;margin-top:10px;overflow:hidden}
+  .bar{height:100%;width:60%;background:var(--bar)}
+
+  .card{margin:16px;border-radius:18px;background:var(--panel);padding:14px;border:2px solid #a97f5a}
+  .card-inner{border:3px solid #7c5a3d;border-radius:14px;padding:12px;background:#fff}
+  .title{font-family:serif;text-align:center;letter-spacing:.2em;font-size:20px;margin:2px 0 10px}
+  .chart-wrap{display:grid;place-items:center}
+  canvas{width:100%;max-width:360px;aspect-ratio:1/1}
+
+  .tiles{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+    margin:8px 8px 0;
+  }
+  .tile{
+    border-radius:8px;
+    color:#2b1a09;
+    padding:6px 6px;
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    min-height:80px;
+    cursor:pointer;
+    min-width:0;
+    position:relative;
+  }
+  .tile h3{margin:0;font-weight:800;font-size:13px;letter-spacing:.04em}
+  .jp{font-size:11px;opacity:.85;line-height:1.2;margin-top:2px}
+  .val{justify-self:end;font-weight:800;font-size:13px;margin-top:4px}
+  .tags{display:none;} /* ← タグを非表示にする */
+
+  .tile.fruity{background:var(--tile-fruity)}
+  .tile.floral{background:var(--tile-floral)}
+  .tile.cereal{background:var(--tile-cereal)}
+  .tile.sulfur{background:var(--tile-sulfur)}
+  .tile.sweet{background:var(--tile-sweet)}
+  .tile.smokey{background:var(--tile-smokey)}
+  .tile.woody{background:var(--tile-woody);color:#fff}
+  .tile.winey{background:var(--tile-winey);color:#fff}
+
+  /* 🧡 スタンプ風メモ欄 */
+  .notes{margin:20px 16px;}
+  textarea{
+    width:100%;height:160px;
+    border-radius:14px;
+    border:3px double #a97f5a;
+    padding:16px 14px;
+    font-size:15px;
+    line-height:1.5;
+    background:#fffdf8;
+    color:#5c2e00;
+    font-family:"Noto Sans JP","Playfair Display",serif;
+    background-image:
+      radial-gradient(rgba(255,100,0,0.08) 10%, transparent 11%),
+      radial-gradient(rgba(180,0,0,0.08) 10%, transparent 11%);
+    background-size:10px 10px;
+    background-position:0 0,5px 5px;
+    box-shadow:inset 0 0 8px rgba(0,0,0,0.08);
+  }
+  .notes label{
+    display:block;
+    text-align:center;
+    color:#a97f5a;
+    font-family:serif;
+    margin-bottom:6px;
+    letter-spacing:.1em;
+  }
+
+  .btns{display:flex;gap:14px;margin:16px;padding-bottom:20px}
+  .btn{flex:1;border-radius:14px;padding:14px 10px;font-weight:800;letter-spacing:.06em;text-align:center;cursor:pointer}
+  .btn.back{background:#fff;border:2px solid #a97f5a}
+  .btn.next{background:#c88254;color:#fff;border:2px solid #a16844}
+</style>
+</head>
+<body>
+  <div class="outer">
+    <div class="phone">
+      <header>
+        <div class="row"><div class="back" onclick="goStamp()">←</div><h1>AROMA BALANCE</h1></div>
+        <div class="progress"><div class="bar"></div></div>
+      </header>
+
+      <section class="card">
+        <div class="card-inner">
+          <div class="title">AROMA BALANCE</div>
+          <div class="chart-wrap"><canvas id="radarChart"></canvas></div>
+        </div>
+      </section>
+
+      <section class="tiles">
+        <div class="tile fruity"><h3>FRUITY</h3><div class="jp">果実のような</div><div class="val" data-key="FRUITY">0</div></div>
+        <div class="tile floral"><h3>FLORAL</h3><div class="jp">花のような</div><div class="val" data-key="FLORAL">0</div></div>
+        <div class="tile cereal"><h3>CEREAL</h3><div class="jp">穀物のような</div><div class="val" data-key="CEREAL">0</div></div>
+        <div class="tile sulfur"><h3>SULPHURY</h3><div class="jp">硫黄のような</div><div class="val" data-key="SULPHURY">0</div></div>
+        <div class="tile sweet"><h3>SWEET</h3><div class="jp">甘さ</div><div class="val" data-key="SWEET">0</div></div>
+        <div class="tile smokey"><h3>SMOKEY</h3><div class="jp">煙のような</div><div class="val" data-key="SMOKEY">0</div></div>
+        <div class="tile woody"><h3>WOODY</h3><div class="jp">木のような</div><div class="val" data-key="WOODY">0</div></div>
+        <div class="tile winey"><h3>WINEY</h3><div class="jp">ワインのような</div><div class="val" data-key="WINEY">0</div></div>
+      </section>
+
+      <div class="notes">
+        <label>STAMP MEMO</label>
+        <textarea id="memoBox" placeholder="スタンプ結果がここに表示されます…"></textarea>
+      </div>
+
+      <div class="btns">
+        <div class="btn back" onclick="goStamp()">StampBoard</div>
+        <div class="btn next" onclick="goHub()">AromaPchi</div>
+      </div>
+    </div>
+  </div>
+
+<script>
+const ctx = document.getElementById("radarChart");
+let labels = ['FRUITY','FLORAL','CEREAL','SULPHURY','WINEY','WOODY','SMOKEY','SWEET'];
+let dataValues = Array(8).fill(0);
+
+// aromaStampsデータ読込
+const aromaData = JSON.parse(localStorage.getItem("aromaStamps") || "{}");
+const categoryMap = {
+  fruity: "FRUITY", floral: "FLORAL", cereal: "CEREAL", sulfury: "SULPHURY",
+  winey: "WINEY", woody: "WOODY", smokey: "SMOKEY", sweet: "SWEET"
+};
+
+// スコア反映
+for (const key in categoryMap) {
+  const arr = aromaData[key] || [];
+  const score = Math.min(arr.length, 10);
+  const idx = labels.indexOf(categoryMap[key]);
+  if (idx >= 0) {
+    dataValues[idx] = score;
+    const tile = document.querySelector(`.val[data-key="${categoryMap[key]}"]`);
+    if (tile) tile.textContent = score;
+  }
+}
+
+// 🧼 削除対応
+if (!localStorage.getItem("aromaStamps") || Object.keys(aromaData).length === 0) {
+  dataValues = Array(8).fill(0);
+}
+
+// レーダーチャート生成
+const chart = new Chart(ctx, {
+  type: 'radar',
+  data: {labels: labels,
+    datasets: [{
+      label: 'Aroma Balance',
+      data: dataValues,
+      fill: true,
+      backgroundColor: 'rgba(95,160,180,0.25)',
+      borderColor: 'rgba(95,160,180,0.8)',
+      borderWidth: 2,
+      pointBackgroundColor: '#5fa0b4'
+    }]
+  },
+  options: {
+    responsive:true,
+    scales:{r:{
+      angleLines:{color:'#cfc4b5'},
+      grid:{color:'#d8c9b8'},
+      suggestedMin:0,suggestedMax:10,
+      ticks:{stepSize:1,color:'#6b5a49',font:{size:10}},
+      pointLabels:{font:{size:12},color:'#3b2a18'}
+    }},
+    plugins:{legend:{display:false}},
+    animation:{duration:600,easing:'easeOutQuart'}
+  }
+});
+
+// スタンプ結果をメモ欄に表示（スタンプ風）
+const memoBox = document.getElementById("memoBox");
+let text = "";
+for (const key in aromaData) {
+  const arr = aromaData[key] || [];
+  if (arr.length > 0) {
+    const jpLabel = {
+      fruity:"果実のような", floral:"花のような", cereal:"穀物のような",
+      sulfury:"硫黄のような", winey:"ワインのような", woody:"木のような",
+      smokey:"煙のような", sweet:"甘さ"
+    }[key];
+    text += `✴ ${jpLabel}：${arr.join("・")}\n`;
+  }
+}
+memoBox.value = text || "スタンプなし";
+
+// ボタン
+function goStamp(){window.location.href='stamp.html';}
+function goHub(){window.location.href='index.html';}
+</script>
+</body>
+</html>

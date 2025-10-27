@@ -2,163 +2,202 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Aroma Stamps — Amber Palette</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aroma Stamp Board — Amber Palette</title>
 <style>
 :root{
-  --bg1:#f8f5ef;
-  --bg2:#efe6d8;
-  --ink:#3a2e2e;
+  --bg:#0f0e0d;
+  --panel:#1b1917;
   --accent:#c7a97a;
-
-  /* 各カテゴリカラー */
-  --c-fruity:#ff7926;
-  --c-floral:#ff8bb2;
-  --c-sweet:#f6b84b;
-  --c-winey:#b46dd6;
-  --c-woody:#b97a56;
-  --c-smokey:#6b4b32;
-  --c-sulfury:#caa974;
-  --c-cereal:#e8c94c;
+  --ink:#f6f1e9;
+  --warn:#c74a4a;
 }
-
 body{
-  background:linear-gradient(to bottom,var(--bg1),var(--bg2));
-  font-family:"Hiragino Kaku Gothic ProN","Meiryo",sans-serif;
+  background:var(--bg);
   color:var(--ink);
+  font-family:'Noto Sans JP','Meiryo',sans-serif;
   margin:0;
-  padding:12px;
+  padding:20px;
 }
-
-/* タイトル */
-h1{
-  text-align:center;
-  font-size:clamp(18px,5vw,22px);
-  margin:10px 0;
+header{text-align:center;margin-bottom:20px;}
+h1{font-size:clamp(20px,6vw,28px);color:var(--accent);margin:0 0 10px;}
+.lang-toggle{
+  display:inline-flex;
+  border:1px solid var(--accent);
+  border-radius:20px;
+  overflow:hidden;
+}
+.lang-toggle button{
+  background:none;
+  border:none;
   color:var(--accent);
+  padding:6px 14px;
+  cursor:pointer;
+  font-size:14px;
 }
-
-/* 各カテゴリブロック */
-.block{
-  margin:14px 0;
-  background:#fffaf2;
-  border-radius:16px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.08);
-  padding:10px 12px 14px;
+.lang-toggle button.active{
+  background:var(--accent);
+  color:var(--bg);
 }
-.block h2{
-  font-size:16px;
-  margin:0 0 8px;
-  display:flex;
-  align-items:center;
-  gap:8px;
+.grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
 }
-h2 span{
-  width:16px;
-  height:16px;
-  border-radius:50%;
-  display:inline-block;
+.category{
+  border:1px solid #3a2e2e;
+  border-radius:12px;
+  padding:10px;
+  background:var(--panel);
+  cursor:pointer;
+  transition:transform .15s ease, box-shadow .15s ease;
+  position:relative;
 }
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:6px;
+.category:hover{
+  transform:translateY(-3px);
+  box-shadow:0 0 10px rgba(199,169,122,.3);
+}
+.category h2{
+  font-size:15px;
+  margin-top:0;
+  color:var(--accent);
+  border-bottom:1px solid #333;
+  padding-bottom:4px;
+}
+.count{
+  position:absolute;
+  top:8px;
+  right:12px;
+  font-size:12px;
+  color:#f0c96a;
 }
 .tag{
+  display:inline-block;
   background:var(--accent);
-  color:#fff;
-  padding:6px 10px;
-  border-radius:20px;
-  font-size:13px;
-  cursor:pointer;
-  transition:opacity .2s;
+  color:var(--bg);
+  padding:3px 8px;
+  border-radius:12px;
+  margin:3px;
+  font-size:12px;
 }
-.tag:hover{opacity:.8;}
-
-/* フッターボタン */
-.footer{
-  text-align:center;
-  margin-top:20px;
-}
-button.clear{
-  background:var(--accent);
-  color:#fff;
+button.action{
+  display:block;
+  margin:20px auto 10px;
   border:none;
   border-radius:24px;
-  padding:10px 20px;
+  padding:10px 22px;
   font-size:14px;
   cursor:pointer;
-  box-shadow:0 3px 10px rgba(0,0,0,.2);
+  box-shadow:0 2px 6px rgba(0,0,0,.3);
+  transition:background .2s,transform .1s;
 }
-button.clear:active{opacity:.8;}
-
-@media (prefers-color-scheme: dark){
-  body{background:radial-gradient(800px at 50% 10%,#1b1917,#0f0e0d);color:#f6efe6;}
-  .block{background:#27231f;}
+button.clear{background:var(--warn);color:#fff;}
+button.clear:hover{background:#e45a5a;}
+button.home{background:var(--accent);color:#000;}
+button.home:hover{background:#d6b982;}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr;}
 }
 </style>
 </head>
 
 <body>
-<h1>My Aroma Stamps</h1>
+<header>
+  <h1 id="title">Aroma Stamp Board</h1>
+  <div class="lang-toggle">
+    <button id="jpBtn" class="active">JP</button>
+    <button id="enBtn">EN</button>
+  </div>
+</header>
 
-<div id="container"></div>
+<div class="grid" id="board"></div>
 
-<div class="footer">
-  <button class="clear" onclick="clearAll()">全て消す</button>
-</div>
+<!-- 🔸 ボタン群 -->
+<button class="action clear" onclick="clearAll()">🗑 全て消去 / Clear All</button>
+<button class="action home" onclick="goHome()">🏠 Index に戻る / Back to Index</button>
+<button class="action home" onclick="goBalance()">📊 Aroma Balanceへ送る / To Aroma Balance</button>
 
 <script>
-/* カテゴリと表示設定 */
-const categories = [
-  {key:'fruity',  label:'Fruity',  color:'var(--c-fruity)'},
-  {key:'floral',  label:'Floral',  color:'var(--c-floral)'},
-  {key:'sweet',   label:'Sweet',   color:'var(--c-sweet)'},
-  {key:'winey',   label:'Winey',   color:'var(--c-winey)'},
-  {key:'woody',   label:'Woody',   color:'var(--c-woody)'},
-  {key:'smokey',  label:'Smokey',  color:'var(--c-smokey)'},
-  {key:'sulfury', label:'Sulfury', color:'var(--c-sulfury)'},
-  {key:'cereal',  label:'Cereal',  color:'var(--c-cereal)'},
-];
+const categoriesJP = {
+  fruity: "フルーティー",
+  floral: "フローラル",
+  sweet: "スイート",
+  winey: "ワイニー",
+  woody: "ウッディー",
+  smokey: "スモーキー",
+  sulfury: "サルファリー",
+  cereal: "シリアル"
+};
+const categoriesEN = {
+  fruity: "Fruity",
+  floral: "Floral",
+  sweet: "Sweet",
+  winey: "Winey",
+  woody: "Woody",
+  smokey: "Smokey",
+  sulfury: "Sulfury",
+  cereal: "Cereal"
+};
 
-/* ページ生成 */
+let currentLang = 'jp';
+const board = document.getElementById('board');
+const jpBtn = document.getElementById('jpBtn');
+const enBtn = document.getElementById('enBtn');
+
 function render(){
-  const data = JSON.parse(localStorage.getItem("aromaStamps") || "{}");
-  const container = document.getElementById("container");
-  container.innerHTML = "";
-  categories.forEach(cat=>{
-    const list = data[cat.key] || [];
-    const block = document.createElement("div");
-    block.className="block";
-    block.innerHTML = `<h2><span style="background:${cat.color}"></span>${cat.label}</h2>`;
-    const tagArea=document.createElement("div");
-    tagArea.className="tags";
-    if(list.length){
-      list.forEach(n=>{
-        const tag=document.createElement("div");
-        tag.className="tag";
-        tag.textContent=n;
-        tag.onclick=()=>location.href=`${cat.key}.html`; // ← タップでカテゴリへ戻る
-        tagArea.appendChild(tag);
-      });
-    }else{
-      tagArea.innerHTML=`<p style="opacity:.6;font-size:13px;">まだ選択なし</p>`;
-    }
-    block.appendChild(tagArea);
-    container.appendChild(block);
-  });
-}
+  board.innerHTML = '';
+  const data = JSON.parse(localStorage.getItem('aromaStamps') || '{}');
+  const cat = currentLang==='jp' ? categoriesJP : categoriesEN;
 
-/* 全削除 */
-function clearAll(){
-  if(confirm("本当に全てのスタンプを消しますか？")){
-    localStorage.removeItem("aromaStamps");
-    render();
+  for(const key in cat){
+    const box = document.createElement('div');
+    box.className = 'category';
+    box.onclick = ()=>window.open(key+'.html','aroma_'+key);
+
+    const title = document.createElement('h2');
+    title.textContent = cat[key];
+
+    const count = document.createElement('div');
+    count.className = 'count';
+    const countNum = data[key]?.length || 0;
+    count.textContent = countNum + (currentLang==='jp' ? ' 個' : ' items');
+
+    box.appendChild(title);
+    box.appendChild(count);
+
+    if(data[key]?.length){
+      data[key].forEach(tag=>{
+        const el = document.createElement('span');
+        el.className = 'tag';
+        el.textContent = tag;
+        box.appendChild(el);
+      });
+    }
+    board.appendChild(box);
   }
 }
 
-/* 初期化 */
-window.addEventListener('load',render);
+function clearAll(){
+  const msg = currentLang==='jp' ? '全てのスタンプを削除しますか？' : 'Delete all aroma stamps?';
+  if(confirm(msg)){
+    localStorage.removeItem('aromaStamps');
+    render();
+  }
+}
+function goHome(){window.location.href='index.html';}
+function goBalance(){
+  const data = JSON.parse(localStorage.getItem('aromaStamps') || '{}');
+  if(Object.keys(data).length === 0){
+    alert('まだスタンプがありません。先にフレーバーを選択してください。');
+  }else{
+    window.location.href = 'aromabalance.html';
+  }
+}
+
+jpBtn.onclick = ()=>{currentLang='jp';jpBtn.classList.add('active');enBtn.classList.remove('active');render();};
+enBtn.onclick = ()=>{currentLang='en';enBtn.classList.add('active');jpBtn.classList.remove('active');render();};
+
+render();
 </script>
 </body>
 </html>

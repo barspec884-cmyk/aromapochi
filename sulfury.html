@@ -2,86 +2,55 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SULFURY — Aroma Pochi</title>
-<link rel="stylesheet" href="common.css">
 <style>
-:root{
-  --cat:#caa974;
-  --accent:#c7a97a;
-}
-body{
-  background:linear-gradient(to bottom,#faf6e9,#f2ebd3);
-  font-family:'Helvetica Neue','Meiryo',sans-serif;
-  color:#3a2e2e;
-  margin:0;
-  padding:max(10px,3vw);
-}
-h1{font-size:clamp(18px,5vw,22px);text-align:center;margin:8px 0 4px;}
-p.sub{text-align:center;font-size:clamp(10px,3vw,13px);margin-bottom:16px;color:#777;}
-.toolbar{display:flex;justify-content:center;gap:10px;margin:10px 0 16px;}
-.seg{display:inline-flex;border:1px solid #ccc;border-radius:12px;overflow:hidden;}
-.seg button{border:0;background:#f3f3f3;padding:6px 10px;font-size:13px;cursor:pointer;}
-.seg button.on{background:#111;color:#fff;}
+:root{--cat:#b4a700;--accent:#c7a97a;}
+body{background:linear-gradient(to bottom,#fffdf3,#f9f4cc);font-family:'Helvetica Neue','Meiryo',sans-serif;color:#3a2e2e;margin:0;padding:max(10px,3vw);}
+h1{text-align:center;margin:8px 0;color:#3a2e2e;}
+p.sub{text-align:center;font-size:13px;color:#777;margin-bottom:14px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;padding-bottom:80px;}
-.btn{background:var(--cat);color:#fff;border:none;border-radius:16px;min-height:68px;font-size:15px;
-display:flex;flex-direction:column;justify-content:center;align-items:center;
-transition:transform .15s ease,box-shadow .15s ease;}
-.btn:active{transform:scale(0.96);box-shadow:0 0 8px rgba(0,0,0,.3) inset;}
+.btn{background:var(--cat);color:#fff;border:none;border-radius:14px;min-height:68px;font-size:15px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;}
+.btn:active{transform:scale(0.95);box-shadow:0 0 8px rgba(0,0,0,.3) inset;}
 .en{font-weight:700;font-size:14px;}
 .jp{font-size:12px;opacity:.9;margin-top:2px;}
-.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
-background:var(--accent);color:#fff;padding:10px 22px;border-radius:28px;font-size:14px;
-text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.25);transition:opacity .2s;}
-.bottom-nav:active{opacity:.8;}
-@media (prefers-color-scheme: dark){
-  body{background:radial-gradient(1000px at 50% 10%,#1b1917,#0f0e0d);color:#f5efe6;}
-  .btn{color:#fff;}
-}
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:10px 22px;border-radius:28px;font-size:14px;text-decoration:none;}
 </style>
 </head>
 
 <body>
 <h1>SULFURY（サルファリー）</h1>
-<p class="sub">硫黄・火薬・ゴムなどの香り — Sulfury Aroma Notes</p>
-
-<div class="toolbar">
-  <div class="seg">
-    <button id="labEN" class="on" onclick="setLabel('EN')">EN</button>
-    <button id="labJP" onclick="setLabel('JP')">日本語</button>
-    <button id="labBI" onclick="setLabel('BI')">EN＋JP</button>
-  </div>
-</div>
+<p class="sub">硫黄やゴムを思わせる香り — Sulphury Aroma Notes</p>
 
 <div class="grid">
-  <button class="btn"><span class="en">Sulfur</span><span class="jp">硫黄</span></button>
-  <button class="btn"><span class="en">Match</span><span class="jp">マッチ</span></button>
-  <button class="btn"><span class="en">Rubber</span><span class="jp">ゴム</span></button>
-  <button class="btn"><span class="en">Garlic</span><span class="jp">ニンニク</span></button>
-  <button class="btn"><span class="en">Onion</span><span class="jp">タマネギ</span></button>
-  <button class="btn"><span class="en">Burnt</span><span class="jp">焦げ</span></button>
-  <button class="btn"><span class="en">Tanned Leather</span><span class="jp">なめし革</span></button>
-  <button class="btn"><span class="en">Boiled Egg</span><span class="jp">ゆで卵</span></button>
-  <button class="btn"><span class="en">Cabbage</span><span class="jp">キャベツ</span></button>
-  <button class="btn"><span class="en">Resin</span><span class="jp">樹脂</span></button>
-  <button class="btn"><span class="en">Burnt Rubber</span><span class="jp">焼けゴム</span></button>
-  <button class="btn"><span class="en">Swamp Gas</span><span class="jp">沼ガス</span></button>
-  <button class="btn"><span class="en">Eraser</span><span class="jp">消しゴム</span></button>
-  <button class="btn"><span class="en">Phenolic</span><span class="jp">フェノール</span></button>
-  <button class="btn"><span class="en">Input</span><span class="jp">インプット</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Sulfur')"><span class="en">Sulfur</span><span class="jp">硫黄</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Struck match')"><span class="en">Struck match</span><span class="jp">火薬</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Rubber')"><span class="en">Rubber</span><span class="jp">ゴム</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Onion')"><span class="en">Onion</span><span class="jp">玉ねぎ</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Phenolic resin')"><span class="en">Phenolic resin</span><span class="jp">フェノール樹脂</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Garlic')"><span class="en">Garlic</span><span class="jp">ニンニク</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Eraser')"><span class="en">Eraser</span><span class="jp">消しゴム</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Boiled cabbage')"><span class="en">Boiled cabbage</span><span class="jp">ゆでキャベツ</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Tanned leather')"><span class="en">Tanned leather</span><span class="jp">なめし革</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Swamp gas')"><span class="en">Swamp gas</span><span class="jp">沼ガス</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Boiled egg')"><span class="en">Boiled egg</span><span class="jp">ゆで卵</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Burnt rubber')"><span class="en">Burnt rubber</span><span class="jp">焼けゴム</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Coffee grounds')"><span class="en">Coffee grounds</span><span class="jp">コーヒーかす</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Laundry')"><span class="en">Laundry</span><span class="jp">洗濯物</span></button>
+  <button class="btn" onclick="addStamp('sulfury','Input')"><span class="en">Input</span><span class="jp">インプット</span></button>
 </div>
 
-<a href="index.html" class="bottom-nav">← Aroma Pochi に戻る</a>
+<a href="stamp.html" class="bottom-nav">← Aroma Stamp Board に戻る</a>
 
 <script>
-let mode='BI';
-function setLabel(m){
-  mode=m;
-  document.getElementById('labEN').classList.toggle('on',m==='EN');
-  document.getElementById('labJP').classList.toggle('on',m==='JP');
-  document.getElementById('labBI').classList.toggle('on',m==='BI');
-  document.querySelectorAll('.en').forEach(e=>e.style.display=(m==='JP')?'none':'');
-  document.querySelectorAll('.jp').forEach(e=>e.style.display=(m==='EN')?'none':'');
+function addStamp(category, name){
+  let data = JSON.parse(localStorage.getItem("aromaStamps") || "{}");
+  if(!data[category]) data[category] = [];
+  if(!data[category].includes(name)) data[category].push(name);
+  localStorage.setItem("aromaStamps", JSON.stringify(data));
+  const win = window.open("stamp.html", "aroma_stamp");
+  if (win) win.focus();
+  setTimeout(()=>{ window.close(); }, 500);
 }
 </script>
 </body>

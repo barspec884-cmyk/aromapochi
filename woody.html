@@ -2,86 +2,55 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>WOODY — Aroma Pochi</title>
-<link rel="stylesheet" href="common.css">
 <style>
-:root{
-  --cat:#b97a56;
-  --accent:#c7a97a;
-}
-body{
-  background:linear-gradient(to bottom,#fdf3ec,#f6e6d9);
-  font-family:'Helvetica Neue','Meiryo',sans-serif;
-  color:#3a2e2e;
-  margin:0;
-  padding:max(10px,3vw);
-}
-h1{font-size:clamp(18px,5vw,22px);text-align:center;margin:8px 0 4px;}
-p.sub{text-align:center;font-size:clamp(10px,3vw,13px);margin-bottom:16px;color:#777;}
-.toolbar{display:flex;justify-content:center;gap:10px;margin:10px 0 16px;}
-.seg{display:inline-flex;border:1px solid #ccc;border-radius:12px;overflow:hidden;}
-.seg button{border:0;background:#f3f3f3;padding:6px 10px;font-size:13px;cursor:pointer;}
-.seg button.on{background:#111;color:#fff;}
+:root{--cat:#6b4b32;--accent:#c7a97a;}
+body{background:linear-gradient(to bottom,#fdf8f3,#f4ece4);font-family:'Helvetica Neue','Meiryo',sans-serif;color:#3a2e2e;margin:0;padding:max(10px,3vw);}
+h1{text-align:center;margin:8px 0;color:#3a2e2e;}
+p.sub{text-align:center;font-size:13px;color:#777;margin-bottom:14px;}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;padding-bottom:80px;}
-.btn{background:var(--cat);color:#fff;border:none;border-radius:16px;min-height:68px;font-size:15px;
-display:flex;flex-direction:column;justify-content:center;align-items:center;
-transition:transform .15s ease,box-shadow .15s ease;}
-.btn:active{transform:scale(0.96);box-shadow:0 0 8px rgba(0,0,0,.3) inset;}
+.btn{background:var(--cat);color:#fff;border:none;border-radius:14px;min-height:68px;font-size:15px;display:flex;flex-direction:column;justify-content:center;align-items:center;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;}
+.btn:active{transform:scale(0.95);box-shadow:0 0 8px rgba(0,0,0,.3) inset;}
 .en{font-weight:700;font-size:14px;}
 .jp{font-size:12px;opacity:.9;margin-top:2px;}
-.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
-background:var(--accent);color:#fff;padding:10px 22px;border-radius:28px;font-size:14px;
-text-decoration:none;box-shadow:0 3px 10px rgba(0,0,0,.25);transition:opacity .2s;}
-.bottom-nav:active{opacity:.8;}
-@media (prefers-color-scheme: dark){
-  body{background:radial-gradient(1000px at 50% 10%,#1b1917,#0f0e0d);color:#f5efe6;}
-  .btn{color:#fff;}
-}
+.bottom-nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:10px 22px;border-radius:28px;font-size:14px;text-decoration:none;}
 </style>
 </head>
 
 <body>
 <h1>WOODY（ウッディ）</h1>
-<p class="sub">木や樽の香ばしい香り — Woody Aroma Notes</p>
-
-<div class="toolbar">
-  <div class="seg">
-    <button id="labEN" class="on" onclick="setLabel('EN')">EN</button>
-    <button id="labJP" onclick="setLabel('JP')">日本語</button>
-    <button id="labBI" onclick="setLabel('BI')">EN＋JP</button>
-  </div>
-</div>
+<p class="sub">木や森を思わせる香り — Woody Aroma Notes</p>
 
 <div class="grid">
-  <button class="btn"><span class="en">Oak</span><span class="jp">オーク</span></button>
-  <button class="btn"><span class="en">Cedar</span><span class="jp">杉</span></button>
-  <button class="btn"><span class="en">Sandalwood</span><span class="jp">白檀</span></button>
-  <button class="btn"><span class="en">Cinnamon</span><span class="jp">シナモン</span></button>
-  <button class="btn"><span class="en">Clove</span><span class="jp">クローブ</span></button>
-  <button class="btn"><span class="en">Tobacco</span><span class="jp">タバコ</span></button>
-  <button class="btn"><span class="en">Leather</span><span class="jp">レザー</span></button>
-  <button class="btn"><span class="en">Vanilla</span><span class="jp">バニラ</span></button>
-  <button class="btn"><span class="en">Nutmeg</span><span class="jp">ナツメグ</span></button>
-  <button class="btn"><span class="en">Toasted Wood</span><span class="jp">焼け木</span></button>
-  <button class="btn"><span class="en">Resin</span><span class="jp">樹脂</span></button>
-  <button class="btn"><span class="en">Tea</span><span class="jp">紅茶</span></button>
-  <button class="btn"><span class="en">Cacao</span><span class="jp">カカオ</span></button>
-  <button class="btn"><span class="en">Coffee</span><span class="jp">コーヒー</span></button>
-  <button class="btn"><span class="en">Input</span><span class="jp">インプット</span></button>
+  <button class="btn" onclick="addStamp('woody','Vanilla')"><span class="en">Vanilla</span><span class="jp">バニラ</span></button>
+  <button class="btn" onclick="addStamp('woody','Oak')"><span class="en">Oak</span><span class="jp">オーク</span></button>
+  <button class="btn" onclick="addStamp('woody','Cedar')"><span class="en">Cedar</span><span class="jp">杉</span></button>
+  <button class="btn" onclick="addStamp('woody','Sandalwood')"><span class="en">Sandalwood</span><span class="jp">白檀</span></button>
+  <button class="btn" onclick="addStamp('woody','Cinnamon')"><span class="en">Cinnamon</span><span class="jp">シナモン</span></button>
+  <button class="btn" onclick="addStamp('woody','Nutmeg')"><span class="en">Nutmeg</span><span class="jp">ナツメグ</span></button>
+  <button class="btn" onclick="addStamp('woody','Clove')"><span class="en">Clove</span><span class="jp">クローブ</span></button>
+  <button class="btn" onclick="addStamp('woody','Tobacco')"><span class="en">Tobacco</span><span class="jp">葉巻</span></button>
+  <button class="btn" onclick="addStamp('woody','Leather')"><span class="en">Leather</span><span class="jp">レザー</span></button>
+  <button class="btn" onclick="addStamp('woody','Toast')"><span class="en">Toast</span><span class="jp">トースト</span></button>
+  <button class="btn" onclick="addStamp('woody','Caramel')"><span class="en">Caramel</span><span class="jp">キャラメル</span></button>
+  <button class="btn" onclick="addStamp('woody','Butterscotch')"><span class="en">Butterscotch</span><span class="jp">バタースコッチ</span></button>
+  <button class="btn" onclick="addStamp('woody','Coffee')"><span class="en">Coffee</span><span class="jp">コーヒー</span></button>
+  <button class="btn" onclick="addStamp('woody','Cocoa')"><span class="en">Cocoa</span><span class="jp">ココア</span></button>
+  <button class="btn" onclick="addStamp('woody','Input')"><span class="en">Input</span><span class="jp">インプット</span></button>
 </div>
 
-<a href="index.html" class="bottom-nav">← Aroma Pochi に戻る</a>
+<a href="stamp.html" class="bottom-nav">← Aroma Stamp Board に戻る</a>
 
 <script>
-let mode='BI';
-function setLabel(m){
-  mode=m;
-  document.getElementById('labEN').classList.toggle('on',m==='EN');
-  document.getElementById('labJP').classList.toggle('on',m==='JP');
-  document.getElementById('labBI').classList.toggle('on',m==='BI');
-  document.querySelectorAll('.en').forEach(e=>e.style.display=(m==='JP')?'none':'');
-  document.querySelectorAll('.jp').forEach(e=>e.style.display=(m==='EN')?'none':'');
+function addStamp(category, name){
+  let data = JSON.parse(localStorage.getItem("aromaStamps") || "{}");
+  if(!data[category]) data[category] = [];
+  if(!data[category].includes(name)) data[category].push(name);
+  localStorage.setItem("aromaStamps", JSON.stringify(data));
+  const win = window.open("stamp.html", "aroma_stamp");
+  if (win) win.focus();
+  setTimeout(()=>{ window.close(); }, 500);
 }
 </script>
 </body>
