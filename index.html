@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Aroma Pochi — Amber Palette</title>
+<title>Aroma Pochi — 香味の色彩を呼び覚ます</title>
 <style>
 :root{
   --bg1:#f8f1e3;
   --bg2:#f2e3c4;
   --ink:#3a2e2e;
   --accent:#c7a97a;
+  --btn-border: #8c6a4a;
 }
 body{
   margin:0;
@@ -22,6 +23,26 @@ body{
   min-height:100vh;
   padding:clamp(12px,4vw,20px);
 }
+
+/* 戻るボタンのスタイル */
+.back-button {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--btn-border);
+  font-size: 0.85rem;
+  border: 1px solid rgba(140, 106, 74, 0.4);
+  padding: 5px 15px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s ease;
+}
+.back-button:hover {
+  background: rgba(140, 106, 74, 0.1);
+  border-color: var(--btn-border);
+  transform: translateX(-3px);
+}
+
 h1{
   font-family:'Playfair Display',serif;
   font-size:clamp(22px,6vw,28px);
@@ -115,6 +136,11 @@ footer{
     background:radial-gradient(1000px at 50% 10%,#1b1917,#0f0e0d);
     color:#f5efe6;
   }
+  .back-button {
+    color: #c7a97a;
+    border-color: rgba(199, 169, 122, 0.4);
+    background: rgba(0, 0, 0, 0.3);
+  }
   .btn{color:#fff;}
   footer{color:#b3a48d;}
 }
@@ -122,8 +148,9 @@ footer{
 </head>
 
 <body>
-  <h1>Aroma Pochi</h1>
-  <p class="sub">Select the aroma category — 香りのタイプを選んでください</p>
+  <a href="https://amber-palette-hub.vercel.app/" class="back-button">← Amber Palette Hub</a>
+  <h1>Aroma Pochi — 香味の色彩を呼び覚ます</h1>
+  <p class="sub">Select the aroma category — 香りの記憶を可視化する</p>
 
   <div class="grid">
     <a href="fruity.html" class="btn fruity"><span class="icon">🍊</span>Fruity</a>
@@ -136,7 +163,7 @@ footer{
     <a href="cereal.html" class="btn cereal"><span class="icon">🌾</span>Cereal</a>
   </div>
 
-  <footer>© Amber Palette / Bar SPEC</footer>
+  <footer>© Amber Palette — Bar SPEC</footer>
 
 <script>
 document.querySelectorAll('.btn').forEach(btn=>{
